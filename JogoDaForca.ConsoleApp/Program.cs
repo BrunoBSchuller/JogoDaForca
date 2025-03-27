@@ -3,7 +3,7 @@
     internal class Program
     {
         
-        // Vesão 2: Exibir palavra oculta com traços
+        // Vesão 4: Exibir desenho da forca
 
         static void Main(string[] args)
         {
