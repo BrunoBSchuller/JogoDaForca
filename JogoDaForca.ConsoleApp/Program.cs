@@ -43,11 +43,13 @@
             {
                 Random geradorDeNumeros = new Random();
 
-               int indicePalavraEscolhida = geradorDeNumeros.Next(frutas.Length);
+                int indicePalavraEscolhida = geradorDeNumeros.Next(frutas.Length);
 
                 string palavraSecreta = frutas[indicePalavraEscolhida];
 
                 char[] letrasEncontradas = new char[palavraSecreta.Length];
+                char[] letrasErradas = new char[5];
+                int contadorLetrasErradas = 0;
 
                 for (int caractere = 0; caractere < letrasEncontradas.Length; caractere++)
                 {
@@ -59,15 +61,20 @@
                 int quantidadeErros = 0;
                 bool jogadorEnforcou = false;   
                 bool jogadorAcertou = false;
+                
 
                 do
                 {
                     string dicaDaPalavra = string.Join("", letrasEncontradas);
-
+                    string dicaLetrasErradas = string.Join("",letrasErradas);   
+                    #region escreve o cabeçalho do jogo
                     Console.Clear();
                     Console.WriteLine("-----------------------------------------------");
                     Console.WriteLine("Jogo da Forca");
                     Console.WriteLine("-----------------------------------------------");
+                    #endregion
+    
+                    #region código que desenha a forca
 
                     if (quantidadeErros == 0)
                     {
@@ -151,13 +158,21 @@
                     }
 
                     Console.WriteLine("-----------------------------------------------");
-                    Console.WriteLine("Palavra secreta: " + dicaDaPalavra);
+                    Console.WriteLine("Palavra secreta: " + dicaDaPalavra );
                     Console.WriteLine("-----------------------------------------------");
-                    Console.WriteLine("Quantidade de erros: " + quantidadeErros);
+                    Console.WriteLine("Letras erradas: " + dicaLetrasErradas );
                     Console.WriteLine("-----------------------------------------------");
+                    Console.WriteLine("Quantidade de erros: " + quantidadeErros );
+                    Console.WriteLine("-----------------------------------------------");
+                    
+                    #endregion
 
+                    #region código que recebe o chute do usuário
                     Console.Write("Digite uma letra: ");
                     char chute = Console.ReadLine()!.ToUpper()[0];
+                    #endregion
+
+                    #region que verifica se o usuário informou uma letra existente na palavra
 
                     bool letraFoiEncontrada = false;
  
@@ -172,11 +187,18 @@
                         }
                        
                     }
+                    #endregion
 
-                   
+
                     if (letraFoiEncontrada == false)
+                    {
                         quantidadeErros++;
-
+                        letrasErradas[contadorLetrasErradas] = chute;
+                        contadorLetrasErradas++;
+                    }
+                   
+                    // Console.WriteLine("letras erradas " + string.Join(" ", letrasErrada));
+                    Console.ReadLine();
 
                     dicaDaPalavra = string.Join("", letrasEncontradas);
 
@@ -216,7 +238,11 @@
 
                 } while (jogadorAcertou == false && jogadorEnforcou == false); // || = OU
 
-                Console.ReadLine();
+                Console.WriteLine("Deseja continuar? (S/N): ");
+                string opcaoContinuar = Console.ReadLine().ToUpper();
+                
+                if (opcaoContinuar != "S")
+                    break;  
 
             }
 
